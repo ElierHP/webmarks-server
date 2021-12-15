@@ -1,0 +1,29 @@
+{
+  "name": "webmarks-server",
+  "version": "1.0.0",
+  "description": "Server API for Webmarks.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElierHP/webmarks-server.git"
+  },
+  "author": "Elier Hernandez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ElierHP/webmarks-server/issues"
+  },
+  "homepage": "https://github.com/ElierHP/webmarks-server#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "mongoose": "^6.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
