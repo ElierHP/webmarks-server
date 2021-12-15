@@ -2,6 +2,7 @@ const express = require("express");
 const port = 5000;
 const session = require("express-session");
 const mongoose = require("mongoose");
+const folderRoute = require("./routes/folder");
 
 require("dotenv").config();
 const app = express();
@@ -22,9 +23,7 @@ app.use(
 mongoose.connect(process.env.DB_HOST).catch((error) => handleError(error));
 
 //Routes
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+app.use("/folders", folderRoute);
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${5000}/`);
