@@ -3,6 +3,7 @@ const port = 5000;
 const session = require("express-session");
 const mongoose = require("mongoose");
 const folderRoute = require("./routes/folder");
+const linkRoute = require("./routes/link");
 
 require("dotenv").config();
 const app = express();
@@ -24,6 +25,7 @@ mongoose.connect(process.env.DB_HOST).catch((error) => handleError(error));
 
 // Routes
 app.use("/folders", folderRoute);
+app.use("/links", linkRoute);
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${5000}/`);
