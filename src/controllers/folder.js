@@ -1,5 +1,5 @@
 const Folder = require("../models/folder");
-const { catchAsync } = require("../middleware");
+const { catchAsync } = require("../utils/index");
 
 module.exports.find = catchAsync(async (req, res) => {
   const folders = await Folder.find({});
