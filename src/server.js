@@ -22,7 +22,7 @@ app.use(
 // Connect Mongoose
 mongoose.connect(process.env.DB_HOST).catch((error) => handleError(error));
 
-//Routes
+// Routes
 app.use("/folders", folderRoute);
 
 app.listen(port, () => {
