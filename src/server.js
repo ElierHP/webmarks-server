@@ -2,6 +2,7 @@ const express = require("express");
 const port = 5000;
 const session = require("express-session");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const folderRoute = require("./routes/folder");
 const linkRoute = require("./routes/link");
 
@@ -19,6 +20,7 @@ app.use(
     cookie: { secure: true },
   })
 );
+app.use(cors());
 
 // Connect Mongoose
 mongoose.connect(process.env.DB_HOST).catch((error) => handleError(error));
