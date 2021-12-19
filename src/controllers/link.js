@@ -9,6 +9,7 @@ module.exports.find = catchAsync(async (req, res) => {
 module.exports.new = catchAsync(async (req, res, next) => {
   const { title, parent_id, url } = req.body;
   const link = await new Link({
+    type: "link",
     title,
     url,
     parent_id,
@@ -25,6 +26,7 @@ module.exports.delete = catchAsync(async (req, res, next) => {
 
 module.exports.edit = catchAsync(async (req, res, next) => {
   const { _id, title, url } = req.body;
-  const link = await Link.findByIdAndUpdate(_id, { title, url });
-  res.send(link);
+  await Link.findByIdAndUpdate(_id, { title, url });
+  const newLink = await Link.findById(_id);
+  res.send(newLink);
 });
