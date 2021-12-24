@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const links = require("../controllers/link");
+const { schema, editSchema } = require("../validations/link");
+const { validate } = require("../validations/middlewares");
 
 router.get("/", links.find);
 
-router.post("/new", links.new);
+router.post("/new", validate(schema), links.new);
 
-router.patch("/edit", links.edit);
+router.patch("/edit", validate(editSchema), links.edit);
 
 router.delete("/delete", links.delete);
 
