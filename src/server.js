@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const folderRoute = require("./routes/folder");
 const linkRoute = require("./routes/link");
+const userRoute = require("./routes/user");
+const passport = require("passport");
 
 require("dotenv").config();
 const app = express();
@@ -32,6 +34,7 @@ mongoose.connect(process.env.DB_HOST).catch((error) => handleError(error));
 // Routes
 app.use("/folders", folderRoute);
 app.use("/links", linkRoute);
+app.use("/users", userRoute);
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${5000}/`);
