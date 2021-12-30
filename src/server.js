@@ -22,6 +22,10 @@ app.use(
 );
 app.use(cors());
 
+// Passport Config
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Connect Mongoose
 mongoose.connect(process.env.DB_HOST).catch((error) => handleError(error));
 
