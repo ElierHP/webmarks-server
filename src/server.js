@@ -6,7 +6,9 @@ const cors = require("cors");
 const folderRoute = require("./routes/folder");
 const linkRoute = require("./routes/link");
 const userRoute = require("./routes/user");
+const User = require("./models/user");
 const passport = require("passport");
+const LocalStrategy = require("passport-local");
 
 require("dotenv").config();
 const app = express();
@@ -27,6 +29,9 @@ app.use(cors());
 // Passport Config
 app.use(passport.initialize());
 app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // Connect Mongoose
 mongoose.connect(process.env.DB_HOST).catch((error) => handleError(error));
