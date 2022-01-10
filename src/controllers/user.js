@@ -19,14 +19,17 @@ module.exports.newUser = async (req, res, next) => {
       return next(err);
     }
   });
-  await res.send(req.user);
+  req.session.isLoggedIn = true;
+  await res.send({ user: req.user, isLoggedIn: req.session.isLoggedIn });
 };
 
 module.exports.login = (req, res) => {
-  res.send(req.body.username);
+  req.session.isLoggedIn = true;
+  res.send({ user: req.user, isLoggedIn: req.session.isLoggedIn });
 };
 
 module.exports.logout = (req, res) => {
   req.logout();
-  res.send("user has been logged out.");
+  req.session.isLoggedIn = false;
+  res.send({ user: req.user, isLoggedIn: req.session.isLoggedIn });
 };
