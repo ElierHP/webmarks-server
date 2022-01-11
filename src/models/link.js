@@ -18,6 +18,10 @@ const linkSchema = Schema({
     type: String,
     required: true,
   },
+  user_id: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 module.exports = mongoose.model("Link", linkSchema);
