@@ -5,7 +5,7 @@ const passport = require("passport");
 const { schema } = require("../validations/user");
 const { validate } = require("../validations/middlewares");
 
-router.route("/").get(users.userData);
+router.route("/").get(users.user);
 
 router.post("/new", validate(schema), users.newUser);
 

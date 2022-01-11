@@ -21,10 +21,16 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true },
+    cookie: { _expires: 2629800000 },
   })
 );
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    optionsSuccessStatus: 200,
+    credentials: true,
+  })
+);
 
 // Passport Config
 app.use(passport.initialize());
