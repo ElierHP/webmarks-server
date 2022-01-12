@@ -2,7 +2,7 @@ const Link = require("../models/link");
 const { catchAsync } = require("../utils/index");
 
 module.exports.find = catchAsync(async (req, res) => {
-  const links = await Link.find({});
+  const links = await Link.find({ user_id: req.user._id });
   res.send(links);
 });
 

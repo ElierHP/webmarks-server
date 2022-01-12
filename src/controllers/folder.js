@@ -3,7 +3,7 @@ const Link = require("../models/link");
 const { catchAsync } = require("../utils/index");
 
 module.exports.find = catchAsync(async (req, res) => {
-  const folders = await Folder.find({});
+  const folders = await Folder.find({ user_id: req.user._id });
   res.send(folders);
 });
 

@@ -18,20 +18,12 @@ module.exports.newUser = catchAsync(async (req, res, next) => {
   const { username, password } = req.body;
   const user = new User({ username: username });
   User.register(user, password, (err) => {
+    res.send({ success: true });
     if (err) {
       console.log("error registering user!", err);
       return next(err);
     }
   });
-  //Login the new user
-  req.login(user, function (err) {
-    if (err) {
-      return next(err);
-    }
-  });
-  //Set logged in session to true and send back user data
-  req.session.isLoggedIn = true;
-  res.send({ user: req.user, isLoggedIn: req.session.isLoggedIn });
 });
 
 module.exports.login = (req, res) => {

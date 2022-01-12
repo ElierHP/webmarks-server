@@ -6,7 +6,7 @@ const { schema } = require("../validations/user");
 const { validate } = require("../validations/middlewares");
 const { authUser } = require("../utils/middlewares");
 
-router.get("/", authUser, users.user);
+router.get("/", users.user);
 
 router.post("/new", validate(schema), users.newUser);
 
