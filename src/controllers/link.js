@@ -13,6 +13,7 @@ module.exports.new = catchAsync(async (req, res, next) => {
     title,
     url,
     parent_id,
+    user_id: req.user._id,
   });
   link.save();
   res.send(link);

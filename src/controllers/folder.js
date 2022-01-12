@@ -13,6 +13,7 @@ module.exports.new = catchAsync(async (req, res, next) => {
     type: "folder",
     title,
     parent_id,
+    user_id: req.user._id,
   });
   folder.save();
   res.send(folder);
