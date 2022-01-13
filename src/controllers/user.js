@@ -18,10 +18,11 @@ module.exports.newUser = catchAsync(async (req, res, next) => {
   const { username, password } = req.body;
   const user = new User({ username: username });
   User.register(user, password, (err) => {
-    res.send({ success: true });
     if (err) {
       console.log("error registering user!", err);
       return next(err);
+    } else {
+      res.send({ success: true });
     }
   });
 });

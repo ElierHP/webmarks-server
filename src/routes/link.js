@@ -5,7 +5,7 @@ const { schema, editSchema } = require("../validations/link");
 const { validate } = require("../validations/middlewares");
 const { authUser } = require("../utils/middlewares");
 
-router.get("/", links.find);
+router.get("/", authUser, links.find);
 
 router.post("/new", authUser, validate(schema), links.new);
 
