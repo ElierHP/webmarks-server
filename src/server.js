@@ -23,6 +23,7 @@ app.use(
       mongoUrl: process.env.DB_HOST,
       touchAfter: 24 * 3600,
     }),
+    secure: true,
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
