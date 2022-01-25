@@ -27,7 +27,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     proxy: true,
-    cookie: { secure: true, _expires: 2629800000 },
+    cookie: { _expires: 2629800000 },
   })
 );
 
