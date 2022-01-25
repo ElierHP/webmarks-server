@@ -1,7 +1,7 @@
 const express = require("express");
-const port = 5000;
 const session = require("express-session");
 const mongoose = require("mongoose");
+const MongoStore = require("connect-mongo");
 const cors = require("cors");
 const folderRoute = require("./routes/folder");
 const linkRoute = require("./routes/link");
@@ -16,14 +16,20 @@ const app = express();
 // Config
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use(
   session({
+    store: MongoStore.create({
+      mongoUrl: process.env.DB_HOST,
+      touchAfter: 24 * 3600,
+    }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: { _expires: 2629800000 },
   })
 );
+
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -40,13 +46,15 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // Connect Mongoose
-mongoose.connect(process.env.DB_HOST).catch((error) => handleError(error));
+mongoose
+  .connect(process.env.DB_HOST || "mongodb://localhost:27017/webmarks-api")
+  .catch((error) => handleError(error));
 
 // Routes
 app.use("/folders", folderRoute);
 app.use("/links", linkRoute);
 app.use("/users", userRoute);
 
-app.listen(port, () => {
-  console.log(`Listening at http://localhost:${5000}/`);
+app.listen(process.env.PORT || 5000, () => {
+  console.log("Connected!");
 });
