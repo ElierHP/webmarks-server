@@ -23,11 +23,11 @@ app.use(
       mongoUrl: process.env.DB_HOST,
       touchAfter: 24 * 3600,
     }),
-    secure: true,
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { _expires: 2629800000 },
+    proxy: true,
+    cookie: { secure: true, _expires: 2629800000 },
   })
 );
 
