@@ -30,6 +30,7 @@ app.use(
     proxy: true,
     cookie: {
       secure: true,
+      sameSite: "None",
       _expires: 2629800000,
     },
   })
