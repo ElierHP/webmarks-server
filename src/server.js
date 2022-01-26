@@ -27,7 +27,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     proxy: true,
-    cookie: { _expires: 2629800000 },
+    cookie: { domain: process.env.BASE_URL, _expires: 2629800000 },
   })
 );
 
