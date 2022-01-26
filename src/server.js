@@ -17,6 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.enable("trust proxy");
 app.use(
   session({
     store: MongoStore.create({
@@ -26,10 +27,10 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    proxy: true,
     cookie: {
-      domain: process.env.BASE_URL,
+      secure: true,
       _expires: 2629800000,
-      sameSite: "none",
     },
   })
 );
