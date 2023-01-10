@@ -7,7 +7,7 @@ module.exports.find = catchAsync(async (req, res) => {
   res.send(folders);
 });
 
-module.exports.new = catchAsync(async (req, res, next) => {
+module.exports.new = catchAsync(async (req, res) => {
   const { title, parent_id } = req.body;
   const folder = await new Folder({
     type: "folder",
@@ -19,7 +19,7 @@ module.exports.new = catchAsync(async (req, res, next) => {
   res.send(folder);
 });
 
-module.exports.delete = catchAsync(async (req, res, next) => {
+module.exports.delete = catchAsync(async (req, res) => {
   const { _id } = req.body;
   const folder = await Folder.findByIdAndDelete(_id);
   await Folder.deleteMany({ parent_id: _id });
@@ -27,7 +27,7 @@ module.exports.delete = catchAsync(async (req, res, next) => {
   res.send(folder);
 });
 
-module.exports.edit = catchAsync(async (req, res, next) => {
+module.exports.edit = catchAsync(async (req, res) => {
   const { _id, title } = req.body;
   await Folder.findByIdAndUpdate(_id, { title });
   const newFolder = await Folder.findById(_id);

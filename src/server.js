@@ -5,6 +5,7 @@ const MongoStore = require("connect-mongo");
 const cors = require("cors");
 const folderRoute = require("./routes/folder");
 const linkRoute = require("./routes/link");
+const noteRoute = require("./routes/note");
 const userRoute = require("./routes/user");
 const User = require("./models/user");
 const passport = require("passport");
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.enable("trust proxy");
+
 app.use(
   session({
     store: MongoStore.create({
@@ -27,12 +29,17 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    proxy: true,
-    cookie: {
-      secure: true,
-      sameSite: "None",
-      _expires: 2629800000,
-    },
+    // proxy is enabled in production env
+    proxy: process.env.NODE_ENV === "production" ? true : false,
+    // cookie is secure in production env
+    cookie:
+      process.env.NODE_ENV === "production"
+        ? {
+            secure: true,
+            sameSite: "None",
+            _expires: 2629800000,
+          }
+        : {},
   })
 );
 
@@ -59,6 +66,7 @@ mongoose
 // Routes
 app.use("/folders", folderRoute);
 app.use("/links", linkRoute);
+app.use("/notes", noteRoute);
 app.use("/users", userRoute);
 
 app.listen(process.env.PORT || 5000, () => {
