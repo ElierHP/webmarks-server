@@ -2,40 +2,45 @@ const User = require("../models/user");
 const { catchAsync } = require("../utils/index");
 
 module.exports.user = catchAsync(async (req, res) => {
-  //If user session exists, send it back
+  // If a user exists, send it as response.
   if (req.user) {
-    req.session.isLoggedIn = true;
-    res.send({ user: req.user, isLoggedIn: req.session.isLoggedIn });
+    const { _id, username } = req.user;
+    res.status(200).send({ user: { _id, username } });
   } else {
-    //Send isLoggedIn as false
-    req.session.isLoggedIn = false;
-    res.send({ isLoggedIn: req.session.isLoggedIn });
+    res.status(202).send({ user: null });
   }
 });
 
 module.exports.newUser = catchAsync(async (req, res, next) => {
-  //Create new user and register using passport
   const { username, password } = req.body;
-  const user = new User({ username: username });
+
+  // Create new user
+  const user = new User({ username });
+
+  // Register new User with passport.
   User.register(user, password, (err) => {
     if (err) {
       console.log("error registering user!", err);
       return next(err);
     } else {
-      res.send({ success: true });
+      res.status(201).send({ msg: "Registered new user." });
     }
   });
 });
 
 module.exports.login = (req, res) => {
-  //Set logged in session to true and send back user data
-  req.session.isLoggedIn = true;
-  res.send({ user: req.user, isLoggedIn: req.session.isLoggedIn });
+  const { _id, username } = req.user;
+
+  // If user authenticates, send it as response.
+  res.status(200).send({
+    user: {
+      _id,
+      username,
+    },
+  });
 };
 
 module.exports.logout = (req, res) => {
   req.logout();
-  //Set logged in session to false & send it back
-  req.session.isLoggedIn = false;
-  res.send({ isLoggedIn: req.session.isLoggedIn });
+  res.status(200).send({ msg: "User has logged out." });
 };

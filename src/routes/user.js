@@ -12,6 +12,6 @@ router.post("/new", validate(schema), users.newUser);
 
 router.post("/login", passport.authenticate("local"), users.login);
 
-router.post("/logout", authUser, users.logout);
+router.delete("/logout", authUser, users.logout);
 
 module.exports = router;

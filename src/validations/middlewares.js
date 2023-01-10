@@ -1,8 +1,8 @@
 module.exports.validate = (schema) => async (req, res, next) => {
   try {
     await schema.validate(req.body);
-    return next();
+    next();
   } catch (err) {
-    return res.sendStatus(500) && next(err);
+    res.status(500).send({ name: err.name, message: err.message }) && next(err);
   }
 };
