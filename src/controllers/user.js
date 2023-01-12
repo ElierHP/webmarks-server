@@ -20,15 +20,15 @@ module.exports.newUser = catchAsync(async (req, res, next) => {
   // Register new User with passport.
   User.register(user, password, (err) => {
     if (err) {
-      console.log("error registering user!", err);
-      return next(err);
+      res.status(409).send({ name: err.name, message: err.message + "." }) &&
+        next(err);
     } else {
-      res.status(201).send({ msg: "Registered new user." });
+      res.status(201).send({ message: "Registered new user." });
     }
   });
 });
 
-module.exports.login = (req, res) => {
+module.exports.login = catchAsync(async (req, res) => {
   const { _id, username } = req.user;
 
   // If user authenticates, send it as response.
@@ -38,9 +38,9 @@ module.exports.login = (req, res) => {
       username,
     },
   });
-};
+});
 
-module.exports.logout = (req, res) => {
-  req.logout();
-  res.status(200).send({ msg: "User has logged out." });
-};
+module.exports.logout = catchAsync(async (req, res) => {
+  await req.logout();
+  res.sendStatus(200);
+});
