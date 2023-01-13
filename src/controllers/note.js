@@ -7,11 +7,11 @@ module.exports.find = catchAsync(async (req, res) => {
 });
 
 module.exports.new = catchAsync(async (req, res) => {
-  const { title, parent_id, description } = req.body;
+  const { title, parent_id, body } = req.body;
   const note = await new Note({
     type: "note",
     title,
-    description,
+    body,
     parent_id,
     user_id: req.user._id,
   });
@@ -26,8 +26,8 @@ module.exports.delete = catchAsync(async (req, res) => {
 });
 
 module.exports.edit = catchAsync(async (req, res) => {
-  const { _id, title, description } = req.body;
-  await Note.findByIdAndUpdate(_id, { title, description });
+  const { _id, title, body } = req.body;
+  await Note.findByIdAndUpdate(_id, { title, body });
   const editedNote = await Note.findById(_id);
   res.send(editedNote);
 });
