@@ -2,7 +2,14 @@ const Note = require("../models/note");
 const { catchAsync } = require("../utils/index");
 
 module.exports.find = catchAsync(async (req, res) => {
-  const notes = await Note.find({ user_id: req.user._id });
+  let notes = [];
+
+  if (req.query.sort === "desc") {
+    notes = await Note.find({ user_id: req.user._id }).sort({ title: "desc" });
+  } else {
+    notes = await Note.find({ user_id: req.user._id }).sort({ title: "asc" });
+  }
+
   res.send(notes);
 });
 

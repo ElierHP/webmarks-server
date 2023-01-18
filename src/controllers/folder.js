@@ -3,7 +3,18 @@ const Link = require("../models/link");
 const { catchAsync } = require("../utils/index");
 
 module.exports.find = catchAsync(async (req, res) => {
-  const folders = await Folder.find({ user_id: req.user._id });
+  let folders = [];
+
+  if (req.query.sort === "desc") {
+    folders = await Folder.find({ user_id: req.user._id }).sort({
+      title: "desc",
+    });
+  } else {
+    folders = await Folder.find({ user_id: req.user._id }).sort({
+      title: "asc",
+    });
+  }
+
   res.send(folders);
 });
 
