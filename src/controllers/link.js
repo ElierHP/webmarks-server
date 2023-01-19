@@ -2,9 +2,10 @@ const Link = require("../models/link");
 const { catchAsync } = require("../utils/index");
 
 module.exports.find = catchAsync(async (req, res) => {
+  const { sort } = req.query;
   let links = [];
 
-  if (req.query.sort === "desc") {
+  if (sort === "desc") {
     links = await Link.find({ user_id: req.user._id }).sort({ title: "desc" });
   } else {
     links = await Link.find({ user_id: req.user._id }).sort({ title: "asc" });
